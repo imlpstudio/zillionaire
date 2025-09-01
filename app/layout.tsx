@@ -1,7 +1,7 @@
 // =============================
 // File: app/layout.tsx
 // =============================
-import "/Users/irvinglamadrid/ridiculous_trader/paper-trader/app/styles/globals.css";
+import "./globals.css";
 import type { Metadata } from "next";
 import Link from "next/link";
 
