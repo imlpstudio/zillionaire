@@ -1,4 +1,4 @@
-import { Card } from "@/components/ui/card";
+import { Card } from "@/components/card";
 import { OrderTicket } from "@/components/OrderTicket";
 import { ChartFrame } from "@/components/ChartFrame";
 

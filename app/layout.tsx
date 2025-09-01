@@ -36,6 +36,10 @@ return (
 <NavLink href="/watchlist">Watchlist</NavLink>
 <NavLink href="/backtest">Backtest</NavLink>
 <NavLink href="/portfolio">Portfolio</NavLink>
+<NavLink href="/validation-plan">Validation Plan</NavLink>
+<NavLink href="/algos">Algos</NavLink>
+<NavLink href="/indicators">Indicators</NavLink>
+
 <a href="https://github.com" target="_blank" className="rounded-md border border-white/10 bg-white/5 px-3 py-1.5 hover:bg-white/10">GitHub</a>
 </div>
 </nav>

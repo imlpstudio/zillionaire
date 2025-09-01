@@ -2,7 +2,7 @@
 
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Card } from "@/components/ui/card";
+import { Card } from "@/components/card";
 
 
 export function TickerTape({ symbols }: { symbols: string[] }) {

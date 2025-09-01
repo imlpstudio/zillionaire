@@ -1,5 +1,5 @@
 import { TickerTape } from "../components/TickerPage";
-import { Card } from "../components/ui/card";
+import { Card } from "../components/card";
 import { ChartFrame } from "../components/ChartFrame";
 import { OrderTicket } from "../components/OrderTicket";
 import { Watchlist } from "../components/Watchlist";
