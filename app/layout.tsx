@@ -30,6 +30,9 @@ export default function RootLayout({
                   <a href="/paper" className="block rounded px-3 py-2 hover:bg-white/10">Paper</a>
                   <a href="/algos" className="block rounded px-3 py-2 hover:bg-white/10">Algos</a>
                   <a href="/backtest" className="block rounded px-3 py-2 hover:bg-white/10">Backtests</a>
+                  <a href="/crypto/console" className="block rounded px-3 py-2 hover:bg-emerald-600/20 text-emerald-300">
+                    Crypto Console (1-2-3)
+                  </a>
                 </div>
               </details>
 
