@@ -1,36 +1,45 @@
 import { TickerTape } from "../components/TickerPage";
 import { Card } from "../components/card";
 import { ChartFrame } from "../components/ChartFrame";
-import { OrderTicket } from "../components/OrderTicket";
 import { Watchlist } from "../components/Watchlist";
 
 export default function HomePage() {
   return (
-    <main className="mx-auto max-w-7xl px-4">
-      <section className="py-4">
+    <main className="mx-auto max-w-7xl px-3 sm:px-4">
+      {/* Ticker */}
+      <section className="py-3 sm:py-4">
         <TickerTape symbols={["AAPL","MSFT","NVDA","TSLA","AMZN","META","GOOGL","SPY","QQQ","BTC-USD"]} />
       </section>
 
-      <section className="grid gap-6 pb-10 lg:grid-cols-3">
-        <div className="lg:col-span-2 space-y-6">
+      {/* Main grid */}
+      <section className="grid gap-4 pb-10 sm:gap-6 lg:grid-cols-3">
+        {/* Left column */}
+        <div className="lg:col-span-2 space-y-4 sm:space-y-6">
           <Card title="Market Overview" subtitle="Candles placeholder — wire to real data later">
-            <ChartFrame />
+            <div className="aspect-[16/9] w-full">
+              <ChartFrame />
+            </div>
           </Card>
 
-          <div className="grid gap-6 sm:grid-cols-2">
+          {/* KPIs */}
+          <div className="grid gap-4 sm:grid-cols-2">
             <Card title="P&L (Today)" tight>
               <KPILine value="+$1,482" sub="+2.6%" />
             </Card>
-            <Card title="Cash Available" tight>
-              <KPILine value="$98,520" sub="Buying power $197k" />
+            <Card title="Quick Links" tight>
+              <div className="flex flex-wrap gap-2 text-sm">
+                <a href="/crypto/console" className="rounded-md bg-emerald-600/20 px-3 py-1 text-emerald-300 hover:bg-emerald-600/30">
+                  Open Console
+                </a>
+                <a href="/paper" className="rounded-md px-3 py-1 hover:bg-white/10">Paper</a>
+                <a href="/backtest" className="rounded-md px-3 py-1 hover:bg-white/10">Backtests</a>
+              </div>
             </Card>
           </div>
         </div>
 
-        <div className="space-y-6">
-          <Card title="Order Ticket">
-            <OrderTicket />
-          </Card>
+        {/* Right column */}
+        <div className="space-y-4 sm:space-y-6">
           <Card title="Watchlist">
             <Watchlist />
           </Card>
