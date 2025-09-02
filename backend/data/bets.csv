@@ -1,0 +1,2 @@
+bet_id,date,league,game_id,selection,decimal_odds,model_prob,stake_units,entry_time_iso
+,2025-08-25,NBA,EX123,home,1.85,0.55,1,2025-08-25T12:15:00

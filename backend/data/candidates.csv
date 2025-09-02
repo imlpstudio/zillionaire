@@ -1,0 +1,2 @@
+date,league,game_id,home,away,decimal_odds_home,decimal_odds_away,model_prob_home,model_prob_away
+2025-08-25,NBA,EX123,HomeTeam,AwayTeam,1.85,2.05,0.55,0.45
