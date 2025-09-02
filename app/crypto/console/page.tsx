@@ -22,15 +22,38 @@ export default function CryptoConsolePage() {
   async function refreshAccount(){ const r=await fetch("/api/ledger/account",{cache:"no-store"}); setAcct(await r.json()); }
   async function refreshSnapshots(){ const r=await fetch("/api/crypto/scan",{cache:"no-store"}); setSnapshots(await r.json()); }
   async function refreshBacktest(){ const r=await fetch("/api/backtest",{cache:"no-store"}); setBt(await r.json()); }
+
   async function resetAccount(){
-    await fetch("/api/ledger/account",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"reset",balance:100000})});
+    await fetch("/api/ledger/account",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({action:"reset",balance:100000})
+    });
     await refreshAccount(); await refreshBacktest();
   }
-  async function markToMarket(){ await fetch("/api/ledger/mtm",{method:"POST"}); await refreshAccount(); await refreshBacktest(); }
+
+  async function markToMarket(){
+    await fetch("/api/ledger/mtm",{method:"POST"});
+    await refreshAccount(); await refreshBacktest();
+  }
+
+  // NEW: fetch live prices (CoinGecko) -> write marks -> refresh MTM/equity
+  async function fetchLivePrices(){
+    setStatus("Fetching live prices…");
+    const r = await fetch("/api/market/prices",{ method:"POST", headers:{ "Content-Type":"application/json" } });
+    const j = await r.json();
+    if (!j.ok) { setStatus(`Live price error: ${j.error||"unknown"}`); return; }
+    setStatus(`Updated ${j.updated} prices. Refreshing MTM…`);
+    await markToMarket();
+  }
 
   async function runScan(){
     setStatus("Scanning…");
-    const res = await fetch("/api/crypto/scan",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({ timeframe:"4h", edge_threshold:0.02 })});
+    const res = await fetch("/api/crypto/scan",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({ timeframe:"4h", edge_threshold:0.02 })
+    });
     const data = await res.json();
     setPicks(data.picks || []);
     setStatus(`Scan saved: ${data.saved}`);
@@ -42,7 +65,8 @@ export default function CryptoConsolePage() {
     setStatus("Logging…");
     const stake_pct = (p.stakeUnits||0)/100; // 1u = 1% equity
     const res = await fetch("/api/crypto/log",{
-      method:"POST",headers:{"Content-Type":"application/json"},
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
       body: JSON.stringify({ symbol:p.symbol, side:p.side, price:p.entry, stake_pct })
     });
     const j = await res.json();
@@ -70,6 +94,7 @@ export default function CryptoConsolePage() {
             <div className="text-neutral-400">Equity (MTM)</div>
             <div className="font-semibold">${acct ? Math.round(acct.equity).toLocaleString() : "…"}</div>
           </div>
+          <button onClick={fetchLivePrices} className="rounded-md bg-neutral-900 hover:bg-neutral-800 px-3 py-1">Live Prices</button>
           <button onClick={markToMarket} className="rounded-md bg-neutral-900 hover:bg-neutral-800 px-3 py-1">Refresh MTM</button>
           <button onClick={resetAccount} className="rounded-md bg-neutral-900 hover:bg-neutral-800 px-3 py-1">Reset $100k</button>
         </div>
@@ -146,7 +171,7 @@ export default function CryptoConsolePage() {
       {/* 2) Paper-trade note */}
       <section className="space-y-2">
         <h2 className="text-xl font-semibold">2) Log paper trades</h2>
-        <p className="text-sm text-neutral-400">“Log” books cash & positions in the local ledger. Use “Refresh MTM” after updating prices in <code>backend/marks/last_prices.csv</code>.</p>
+        <p className="text-sm text-neutral-400">“Log” books cash & positions in the local ledger. Use “Live Prices” then “Refresh MTM” to update equity from the latest marks.</p>
       </section>
 
       {/* 3) Backtest */}
