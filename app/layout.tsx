@@ -5,9 +5,19 @@ export const metadata = {
   description: "Autonomous paper trading portal",
 };
 
-export default function RootLayout({
-  children,
-}: { children: React.ReactNode }) {
+function Icon({ children, title }: { children: React.ReactNode; title: string }) {
+  return (
+    <span
+      className="inline-flex h-7 w-7 items-center justify-center rounded-md hover:bg-white/10"
+      title={title}
+      aria-label={title}
+    >
+      {children}
+    </span>
+  );
+}
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className="bg-black text-white">
@@ -18,72 +28,73 @@ export default function RootLayout({
               Shweatlhy
             </a>
 
-            {/* Grouped Nav */}
-            <div className="flex items-center gap-4">
-              {/* Trading */}
-              <details className="group relative">
-                <summary className="cursor-pointer rounded-md px-3 py-1 hover:bg-white/5">
-                  Trading
-                </summary>
-                <div className="absolute right-0 z-50 mt-2 min-w-[220px] rounded-lg border border-white/10 bg-black/95 p-2 shadow-xl backdrop-blur">
-                  <a href="/plays" className="block rounded px-3 py-2 hover:bg-white/10">Top Plays</a>
-                  <a href="/paper" className="block rounded px-3 py-2 hover:bg-white/10">Paper</a>
-                  <a href="/algos" className="block rounded px-3 py-2 hover:bg-white/10">Algos</a>
-                  <a href="/backtest" className="block rounded px-3 py-2 hover:bg-white/10">Backtests</a>
-                  <a href="/crypto/console" className="block rounded px-3 py-2 hover:bg-emerald-600/20 text-emerald-300">
-                    Crypto Console (1-2-3)
-                  </a>
-                </div>
-              </details>
+            {/* Flat, icon-first nav */}
+            <div className="flex items-center gap-2 sm:gap-3">
+              {/* Primary flow */}
+              <a
+                href="/crypto/console"
+                className="rounded-md px-3 py-1 bg-emerald-600/20 text-emerald-300 hover:bg-emerald-600/30"
+                title="Crypto Console (1-2-3)"
+              >
+                Console
+              </a>
+              <a href="/paper" className="rounded-md px-3 py-1 hover:bg-white/5" title="Paper">
+                Paper
+              </a>
+              <a href="/backtest" className="rounded-md px-3 py-1 hover:bg-white/5" title="Backtests">
+                Backtests
+              </a>
 
-              {/* Information */}
-              <details className="group relative">
-                <summary className="cursor-pointer rounded-md px-3 py-1 hover:bg-white/5">
-                  Information
-                </summary>
-                <div className="absolute right-0 z-50 mt-2 min-w-[260px] rounded-lg border border-white/10 bg-black/95 p-2 shadow-xl backdrop-blur">
-                  <a href="/evaluation-flow" className="block rounded px-3 py-2 hover:bg-white/10">Evaluation Flow</a>
-                  <a href="/validation-plan" className="block rounded px-3 py-2 hover:bg-white/10">Validation Plan</a>
-                </div>
-              </details>
+              {/* Icons: Portfolio ($), Watchlist (eye), Info (i) */}
+              <a href="/portfolio" className="rounded-md" title="Portfolio">
+                <Icon title="Portfolio ($)">
+                  <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5">
+                    <path d="M4 7h16v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7Z" stroke="currentColor" strokeWidth="1.5"/>
+                    <path d="M8 7V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1" stroke="currentColor" strokeWidth="1.5"/>
+                    <path d="M12 10c-2 0-3 .8-3 2s1 2 3 2 3 .8 3 2-1 2-3 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                    <path d="M12 9v10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                  </svg>
+                </Icon>
+              </a>
 
-              {/* Portfolio */}
-              <details className="group relative">
-                <summary className="cursor-pointer rounded-md px-3 py-1 hover:bg-white/5">
-                  Portfolio
-                </summary>
-                <div className="absolute right-0 z-50 mt-2 min-w-[200px] rounded-lg border border-white/10 bg-black/95 p-2 shadow-xl backdrop-blur">
-                  <a href="/portfolio" className="block rounded px-3 py-2 hover:bg-white/10">Positions</a>
-                  <a href="/watchlist" className="block rounded px-3 py-2 hover:bg-white/10">Watchlist</a>
-                </div>
-              </details>
+              <a href="/watchlist" className="rounded-md" title="Watchlist">
+                <Icon title="Watchlist">
+                  <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5">
+                    <path d="M1.5 12s4.5-7.5 10.5-7.5S22.5 12 22.5 12 18 19.5 12 19.5 1.5 12 1.5 12Z" stroke="currentColor" strokeWidth="1.5"/>
+                    <circle cx="12" cy="12" r="3.5" stroke="currentColor" strokeWidth="1.5"/>
+                  </svg>
+                </Icon>
+              </a>
 
-              {/* Tracking */}
-              <details className="group relative">
-                <summary className="cursor-pointer rounded-md px-3 py-1 hover:bg-white/5">
-                  Tracking
-                </summary>
-                <div className="absolute right-0 z-50 mt-2 min-w-[220px] rounded-lg border border-white/10 bg-black/95 p-2 shadow-xl backdrop-blur">
-                  <a href="/metrics" className="block rounded px-3 py-2 hover:bg-white/10">Metrics</a>
-                  <a href="/trades" className="block rounded px-3 py-2 hover:bg-white/10">Trade Log</a>
-                </div>
-              </details>
+              <a href="/evaluation-flow" className="rounded-md" title="Information">
+                <Icon title="Information">
+                  <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5">
+                    <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5"/>
+                    <path d="M12 8.5v.01M12 11v5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                  </svg>
+                </Icon>
+              </a>
 
-              {/* External */}
+              {/* GitHub icon */}
               <a
                 href="https://github.com/imlpstudio/zillionaire"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-md px-3 py-1 hover:bg-white/5"
+                className="rounded-md"
+                title="GitHub"
               >
-                GitHub
+                <Icon title="GitHub">
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
+                    <path d="M12 .5A11.5 11.5 0 0 0 .5 12c0 5.08 3.29 9.38 7.86 10.9.58.11.79-.26.79-.58v-2.04c-3.2.7-3.87-1.36-3.87-1.36-.53-1.34-1.3-1.7-1.3-1.7-1.06-.73.08-.71.08-.71 1.17.08 1.78 1.2 1.78 1.2 1.04 1.78 2.73 1.27 3.4.97.11-.75.41-1.27.75-1.56-2.55-.29-5.23-1.28-5.23-5.69 0-1.26.45-2.29 1.2-3.1-.12-.29-.52-1.46.11-3.04 0 0 .98-.31 3.2 1.19a11.1 11.1 0 0 1 5.83 0c2.22-1.5 3.2-1.19 3.2-1.19.63 1.58.23 2.75.11 3.04.75.81 1.2 1.84 1.2 3.1 0 4.42-2.69 5.39-5.25 5.67.42.36.8 1.07.8 2.16v3.2c0 .32.21.69.8.58A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/>
+                  </svg>
+                </Icon>
               </a>
 
-              {/* Temporary admin */}
+              {/* Temporary admin / Betting */}
               <a
                 href="/secret"
                 className="rounded-lg bg-white/5 px-2 py-1 hover:bg-white/10"
-                title="Admin Console (temporary)"
+                title="Betting (Admin Console)"
               >
                 Betting
               </a>
